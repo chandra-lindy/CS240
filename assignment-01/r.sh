@@ -11,19 +11,19 @@ rm *.lis
 rm *.out
 
 echo "Compile driver.cpp"
-g++ -c -Wall -no-pie -m64 -std=c++17 -o driver.o driver.cpp
+g++ -c -Wall -no-pie -m64 -std=c++17 -o driver.o driver.cpp -g
 
 echo "Compile isFloat.cpp"
-g++ -c -Wall -no-pie -m64 -std=c++17 -o isFloat.o isFloat.cpp
+g++ -c -Wall -no-pie -m64 -std=c++17 -o isfloat.o isfloat.cpp -g
 
 echo "Assemble fp_io.asm"
-nasm -f elf64 -l fp_io.lis -o fp_io.o fp_io.asm
+nasm -f elf64 -l fp_io.lis -o compare_two_floats.o compare-two-floats.asm -g
 
 echo "Link object files using the gcc Linker standard 2017"
-g++ -m64 -no-pie -std=c++17 -o floating_point_io.out driver.o isFloat.o fp_io.o
+g++ -m64 -no-pie -std=c++17 -o compare_two_floats.out driver.o isfloat.o compare_two_floats.o -g
 
-echo "Run the Quadratic Program:"
-./floating_point_io.out
+echo "Run the Compare Float Program:"
+./compare_two_floats.out
 
 echo "Script file has terminated."
 
