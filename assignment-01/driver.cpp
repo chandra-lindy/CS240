@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 
-extern "C" double fp_io();
+extern "C" double compare_two_floats();
 
 main() {
   printf("Welcome to the floating point numbers programed by Chandra Lindy");
@@ -10,7 +10,7 @@ main() {
 
   double result {};
 
-  result = fp_io();
+  result = compare_two_floats();
 
   printf("The driver module received this float number: %1.16lf and will keep it", result);
   printf("This driver module will return 0 to the operating system.");
