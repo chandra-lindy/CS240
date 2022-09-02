@@ -38,11 +38,14 @@ prompt_message                 db    "Please enter two float numbers separated b
 confirmation_message           db    10, "These numbers were entered:", 10, "%1.16lf", 10, "%1.16lf", 10, 10, 0
 comparison_result_message      db    "The larger number is %1.16lf", 10, 10, 0
 bad_input_message              db    10, "An invalid input was detected.  You may run this program again.", 10, 0
-return_message                db    "This assembly module will now return execution to the driver module.", 10, "The smaller number will be returned to the driver", 10, 10, 0
+return_message                 db    "This assembly module will now return execution to the driver module.", 10, "The smaller number will be returned to the driver", 10, 10, 0
 
 ; format strings declarations
 string_f                       db    "%s", 0
 float_f                        db    "%lf", 0
+
+; constant numeric declarations
+neg_1                          db    -0x1
 
 ; Text segment - instructions begin here, includes some headers or labels tha define inital program
 ; ********** EXECUTABLE CODE BEGIN **********
@@ -71,7 +74,7 @@ pushf
 ; ******************** program logic goes here ********************
 
 ; print input prompt message
-mov       rax, 0                ; how many xmm register needs to be used for the subsequent function call
+mov       rax, 0
 mov       rdi, prompt_message
 call      printf
 
@@ -82,7 +85,7 @@ mov       rdi, string_f
 mov       rsi, rsp
 call      scanf
 
-; validate check first string
+; validate first string
 mov       rax, 0
 mov       rdi, rsp
 call      isfloat
@@ -98,7 +101,7 @@ movsd     xmm14, xmm0
 ; get input from user for second string
 mov       rax, 0
 mov       rdi, string_f
-mov       rsi, rsp
+mov       rsi, rsp               ; re-use top of stack since we no longer need first string
 call      scanf
 
 ; validate second string
@@ -113,7 +116,7 @@ mov       rax, 0
 mov       rdi, rsp
 call      atof
 movsd     xmm15, xmm0
-add       rsp, 1024             ; shrink stack back, no longer needed
+add       rsp, 1024              ; shrink stack to restore
 
 ; print confirmation message
 mov       rax, 2
@@ -124,12 +127,18 @@ call      printf
 
 ; compare floats
 ucomisd   xmm14, xmm15
-ja        greaterThan
+jl        lessThan
 
-; else - xmm15 is larger
+; else swap positions
+movsd     xmm13, xmm14
+movsd     xmm14, xmm15
+movsd     xmm15, xmm13
+
+lessThan:
+; display comparison result
 mov       rax, 1
-mov       rdi, comparison_result_message
 movsd     xmm0, xmm15
+mov       rdi, comparison_result_message
 call      printf
 
 ; display return message
@@ -137,34 +146,22 @@ mov       rax, 0
 mov       rdi, return_message
 call      printf
 
+; set smaller number for return
 movsd     xmm0, xmm14
 jmp       final
 
-; if greather than - xmm14 is larger
-greaterThan:
-mov       rax, 1
-mov       rdi, comparison_result_message
-movsd     xmm0, xmm14
-call      printf
-
-; display return message
-mov       rax, 0
-mov       rdi, return_message
-call      printf
-
-movsd     xmm0, xmm15
-jmp       final
-
-; not float branch
 not_float:
+; display bad input message
 mov       rax, 0
 mov       rdi, bad_input_message
 call      printf
+add       rsp, 1024
 
+; set -1 as return code
+mov       rax, -1
+cvtsi2sd  xmm0, rax
 
 final:
-; display return message
-
 ; restore GPRs
 popf
 pop rbx
@@ -182,4 +179,5 @@ pop rsi
 pop rdi
 pop rbp
 
+; return control to caller
 ret
