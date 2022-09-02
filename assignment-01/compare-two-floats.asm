@@ -37,7 +37,7 @@ segment .data
 prompt_message                 db    "Please enter two float numbers separated by white space.  Press enter after the second input.", 10, 10, 0
 confirmation_message           db    10, "These numbers were entered:", 10, "%1.16lf", 10, "%1.16lf", 10, 10, 0
 comparison_result_message      db    "The larger number is %1.16lf", 10, 10, 0
-bad_input_message              db    10, "An invalid input was detected.  You may run this program again.", 10, 0
+bad_input_message              db    10, "An invalid input was detected.  You may run this program again.", 10, 10, 0
 return_message                 db    "This assembly module will now return execution to the driver module.", 10, "The smaller number will be returned to the driver", 10, 10, 0
 
 ; format strings declarations
