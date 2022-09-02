@@ -26,7 +26,7 @@
 ;  Date of last update: 2022 September 2nd
 ;  Date of reorganization of comments: 2021 September 2nd
 ;  Files in this program: compareTwoFloats.asm, driver.cpp, isfloat.cpp, run.sh
-;  Status: Finished.  The program was tested extensively with no errors in Tuffix 2020 Edition.
+;  Status: Finished.  The program was tested extensively with no errors on an Ubuntu 20.04 native installation
 ;
 ;This file
 ;   File name: compare-two-floats.asm
