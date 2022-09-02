@@ -1,33 +1,50 @@
-; compare_two_floats
-; CPSC 240 - Assingment #1
-; by, Chandra Lindy
+;********************************************************************************************************************************
+;Program name: "Compare Two Floats".
+; This program will allow users to input two floating point numbers and determine which is the greater than the other by
+; displaying the bigger number and returning the smaller number as a return value.
+;
+; Copyright (C) 2021 Chandra Lindy.
+;
+; This file is part of the software program "Compare Two Floats".
+; This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
+; version 3 as published by the Free Software Foundation.
+;
+; This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+; A copy of the GNU General Public License v3 is available here:  <https:;www.gnu.org/licenses/>.
+;********************************************************************************************************************************
 
-; open source license
-; author info - 2 lines
-
-; program information:
-; name
-; languages
-; dates
-; files
-; status
-; references
-
-; purpose of this software
-; module info
-;; filename in os
-;; language
-;; how to compile
-;; calls - does it call other functions?
-
-; block structure for assembly
+;================================================================================================================================
+;Author information
+;  Author name: Chandra Lindy
+;  Author email: chandra.lindy@csu.fullerton.edu
+;
+;Program information
+;  Program name: Compare Two Floats
+;  Programming languages: Assembly x86-64, C++, C, bash
+;  Date program began: 2022 August 31st
+;  Date of last update: 2022 September 2nd
+;  Date of reorganization of comments: 2021 September 2nd
+;  Files in this program: compareTwoFloats.asm, driver.cpp, isfloat.cpp, run.sh
+;  Status: Finished.  The program was tested extensively with no errors in Tuffix 2020 Edition.
+;
+;This file
+;   File name: compare-two-floats.asm
+;   Language: X86 with Intel syntax.
+;   Max page width: 129 columns
+;   Assemble: nasm -f elf64 -l compareTwoFloats.lis -o compareTwoFloats.o compareTwoFloats.asm
+;   Link: g++ -m64 -no-pie -std=c++17 -o compareTwoFloats.out driver.o isfloat.o compareTwoFloats.o
+;   Purpose: Prompts user for input of two floating point numbers, validates them to ensure they are indeed floating points,
+;            displays the two inputer numbers, displays the larger of the two and returns the smaller number to the caller.
+;            If invalid number(s) were inputted, a message is displayed and a -1 is returned to the caller.
+;================================================================================================================================
 
 ; ********** CODE BEGIN **********
 extern    printf
 extern    scanf
 extern    isfloat
 extern    atof
-global    compare_two_floats
+global    compareTwoFloats
 
 ; Data segment - initialize dvariable sand ocnstants goes here
 segment .data
@@ -41,18 +58,14 @@ bad_input_message              db    10, "An invalid input was detected.  You ma
 return_message                 db    "This assembly module will now return execution to the driver module.", 10, "The smaller number will be returned to the driver", 10, 10, 0
 
 ; format strings declarations
-string_f                       db    "%s", 0
 float_f                        db    "%lf", 0
 two_string_f                   db    "%s%s", 0
 
-; constant numeric declarations
-neg_1                          db    -0x1
-
 ; Text segment - instructions begin here, includes some headers or labels tha define inital program
-; ********** EXECUTABLE CODE BEGIN **********
+; ********** executable code begins **********
 segment .text
 
-compare_two_floats:
+compareTwoFloats:
 
 ; backup GPRs
 push      rbp
@@ -72,7 +85,7 @@ push      r14
 push      r15
 pushf
 
-; ******************** program logic goes here ********************
+; ******************** program logic begins ********************
 
 ; print input prompt message
 mov       rax, 0
