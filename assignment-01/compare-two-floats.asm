@@ -43,6 +43,7 @@ return_message                 db    "This assembly module will now return execu
 ; format strings declarations
 string_f                       db    "%s", 0
 float_f                        db    "%lf", 0
+two_string_f                   db    "%s%s", 0
 
 ; constant numeric declarations
 neg_1                          db    -0x1
@@ -78,16 +79,28 @@ mov       rax, 0
 mov       rdi, prompt_message
 call      printf
 
+; grow stack to make room for two string inputs
+sub       rsp, 2048
+mov       r15, rsp
+add       r15, 1024
+
 ; get input from user for first string
-sub       rsp, 1024             ; grow stack to handle string input
 mov       rax, 0
-mov       rdi, string_f
+mov       rdi, two_string_f
 mov       rsi, rsp
+mov       rdx, r15
 call      scanf
 
 ; validate first string
 mov       rax, 0
 mov       rdi, rsp
+call      isfloat
+cmp       rax, 0
+je        not_float
+
+; validate second string
+mov       rax, 0
+mov       rdi, r15
 call      isfloat
 cmp       rax, 0
 je        not_float
@@ -98,25 +111,14 @@ mov       rdi, rsp
 call      atof
 movsd     xmm14, xmm0
 
-; get input from user for second string
-mov       rax, 0
-mov       rdi, string_f
-mov       rsi, rsp               ; re-use top of stack since we no longer need first string
-call      scanf
-
-; validate second string
-mov       rax, 0
-mov       rdi, rsp
-call      isfloat
-cmp       rax, 0
-je        not_float
-
 ; convert second string to float
 mov       rax, 0
-mov       rdi, rsp
+mov       rdi, r15
 call      atof
 movsd     xmm15, xmm0
-add       rsp, 1024              ; shrink stack to restore
+
+; restore stack - strings no longer needed
+add rsp, 2048
 
 ; print confirmation message
 mov       rax, 2
@@ -127,7 +129,7 @@ call      printf
 
 ; compare floats
 ucomisd   xmm14, xmm15
-jl        lessThan
+jb        lessThan
 
 ; else swap positions
 movsd     xmm13, xmm14
@@ -135,7 +137,7 @@ movsd     xmm14, xmm15
 movsd     xmm15, xmm13
 
 lessThan:
-; display comparison result
+; display larger float value
 mov       rax, 1
 movsd     xmm0, xmm15
 mov       rdi, comparison_result_message
@@ -151,11 +153,13 @@ movsd     xmm0, xmm14
 jmp       final
 
 not_float:
+; restore stack - input strings no longer needed
+add rsp, 2048
+
 ; display bad input message
 mov       rax, 0
 mov       rdi, bad_input_message
 call      printf
-add       rsp, 1024
 
 ; set -1 as return code
 mov       rax, -1
