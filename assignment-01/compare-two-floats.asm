@@ -124,7 +124,7 @@ call      printf
 
 ; compare floats
 ucomisd   xmm14, xmm15
-ja        greaterThan
+jg        greaterThan
 
 ; else - xmm15 is larger
 mov       rax, 1
