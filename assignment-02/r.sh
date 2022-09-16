@@ -14,10 +14,10 @@ echo "Assemble triangle.asm"
 nasm -f elf64 -l triangle.lis -o triangle.o triangle.asm
 
 echo "Compile pythagoras.c"
-gcc pythagoras.c triangle.o -o right-triangles
+gcc -Wall -fno-pie -no-pie pythagoras.c triangle.o -o right-triangles.out
 
 echo "Run the Right Triangles Program:\n\n"
-./right-triangles
+./right-triangles.out
 
 echo "Script file has terminated."
 
