@@ -13,3 +13,23 @@ p/x $rdx  # 0x0
 p/x $rsp  # 0x7fffffffdf70
 s
 p/x &message_prompt_name  # 0x404058  -  this is stored in the heap because 0x404058 is a lot smaller than 0x7fffffffdf70
+n
+n
+n
+.
+.
+.
+n
+p/x $xmm14.v2_int64  # {0x0, 0x0}
+n
+n
+p/x $xmm14.v2_int64[0]  # 0x405ee00000000000
+n
+n
+.
+.
+.
+n
+p/x $xmm0.v2_int64[0]  # 0x4065dbc3abda0b3e
+n
+p/d $xmm0.v2_double[0]  # 174.86763565623
