@@ -41,7 +41,6 @@
 ; include external functions
 extern printf
 extern scanf
-extern atof
 extern read
 extern strlen
 extern sqrt
@@ -62,8 +61,7 @@ message_result db 10, "The length of the hypotenuse is %1.5lf units long.", 10, 
 message_goodbye db "Enjoy your triangles %s %s", 10, 10, 0
 
 ; format strings declarations
-f_float db "%lf", 0
-f_two_strings db "%s%s", 0
+f_two_floats db "%lf%lf", 0
 
 ; BSS segment - variables declerations
 segment .bss
@@ -152,21 +150,13 @@ mov rdi, message_prompt_sides
 call printf
 ;; read input from user
 mov rax, 0
-mov rdi, f_two_strings
+mov rdi, f_two_floats
 mov rsi, rsp
 mov rdx, r15
 call scanf
-;; convert strings to floats
-;;; first string
-mov rax, 0
-mov rdi, rsp
-call atof
-movsd xmm14, xmm0
-;;; second string
-mov rax, 0
-mov rdi, r15
-call atof
-movsd xmm15, xmm0
+;; save numbers into registers for calculation
+movsd xmm14, [rsp]
+movsd xmm15, [r15]
 ;; check for invalid values (n <= 0)
 ;;; zero out a register for comparison
 pxor xmm13, xmm13
