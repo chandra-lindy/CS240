@@ -22,6 +22,6 @@ gdb ./right-triangles.out
 echo "Script file has terminated."
 
 # Clear any new compiled outputs to keep environment clean
-#rm *.o
-#rm *.lis
-#rm *.out
+rm *.o
+rm *.lis
+rm *.out
