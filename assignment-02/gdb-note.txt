@@ -1,0 +1,15 @@
+GDB commands used for Assignment #2
+
+b main
+b triangle
+r
+n
+n
+n
+n
+p/d result  # 0
+p/x &result  # 0x7fffffffdf78
+p/x $rdx  # 0x0
+p/x $rsp  # 0x7fffffffdf70
+s
+p/x &message_prompt_name  # 0x404058  -  this is stored in the heap because 0x404058 is a lot smaller than 0x7fffffffdf70
