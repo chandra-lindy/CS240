@@ -1,10 +1,20 @@
+; external resource declaration
+;; custom library
 extern printf
 extern scanf
 extern sum
 extern input_float
 
-segment .data
+;; standard library
+extern strlen
+extern read
 
+; declare constant values
+INPUT_LEN equ 256
+
+
+segment .data
+; message string declaration
 message_prompt_name db "Please enter your name: ", 10, 10, 0
 message_prompt_array db "Please enter your array of integers separated by white space (cntl-d when finished): ", 10, 10, 0
 message_display_array db "The following numbers were received and stored away in an array", 10, 10, 0
@@ -12,6 +22,8 @@ message_display_sum db "The sum of the %d numbers in this array is %d", 10, 10, 
 message_return db "This program will return execution to the main function", 10, 10, 0
 
 segment .bss
+; declare variable to store name
+name resb INPUT_LEN
 
 segment .text
 
@@ -36,10 +48,37 @@ push r15
 push rbx
 pushf
 
-; ********** assembly code goes here **********
+; ********** program logic begins **********
 
-; example during SI session
+; prompt user name
+;; display prompt message for name
+mov rax, 0
+mov rdi, message_prompt_name
+call printf
 
+;; get input from user
+mov rax, 0
+xor rdi, rdi
+mov rsi, name
+mov rdx, INPUT_LEN
+call read
+
+;; remove newline character
+mov rax, 0
+mov rdi, name
+call strlen
+sub rax, 1
+mov byte [name + rax], 0
+
+
+
+; more logic goes here
+
+
+
+
+; return name to driver
+mov rax, name
 
 ;===== Restore original values to integer registers ===================================================================
 popf

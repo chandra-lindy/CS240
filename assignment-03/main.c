@@ -3,6 +3,7 @@
 extern int sum();
 extern int input_array();
 extern int display_array();
+extern char * manager();
 
 int main(int argc, char *argv[])
 {
@@ -10,8 +11,11 @@ int main(int argc, char *argv[])
            "programmed by Chandra Lindy\n\n");
     int answer = sum();
     int result = input_array();
+    char * name = manager();
+
     printf("Answer that was return from sum(): %d\n", answer);
     printf("Return value from input_array(): %d\n", result);
+    printf("Return value from manager: %s\n", name);
 
     printf("display_array works!!");
     display_array();
