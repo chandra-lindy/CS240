@@ -1,7 +1,6 @@
 extern printf
 extern scanf
 
-global sum
 
 segment .data
 
@@ -9,6 +8,7 @@ segment .bss
 
 segment .text
 
+global sum
 sum:
 
 ;Prolog ===== Insurance for any caller of this assembly module ========================================================
@@ -29,9 +29,8 @@ push r15
 push rbx
 pushf
 
-; ********** assembly code goes here **********
+; ********** program logic begins **********
 
-; example during SI session
 
 
 ;===== Restore original values to integer registers ===================================================================
