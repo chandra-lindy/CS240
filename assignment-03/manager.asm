@@ -3,14 +3,19 @@ extern scanf
 extern sum
 extern input_float
 
-global manager
-
 segment .data
+
+message_prompt_name db "Please enter your name: ", 10, 10, 0
+message_prompt_array db "Please enter your array of integers separated by white space (cntl-d when finished): ", 10, 10, 0
+message_display_array db "The following numbers were received and stored away in an array", 10, 10, 0
+message_display_sum db "The sum of the %d numbers in this array is %d", 10, 10, 0
+message_return db "This program will return execution to the main function", 10, 10, 0
 
 segment .bss
 
 segment .text
 
+global manager
 manager:
 
 ;Prolog ===== Insurance for any caller of this assembly module ========================================================
