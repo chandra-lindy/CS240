@@ -1,14 +1,15 @@
-extern printf
 extern scanf
 
-global input_array
 
 segment .data
+; format string declaration
+format_int db "%d", 0
 
 segment .bss
 
 segment .text
 
+global input_array
 input_array:
 
 ;Prolog ===== Insurance for any caller of this assembly module ========================================================
@@ -29,9 +30,38 @@ push r15
 push rbx
 pushf
 
-; ********** assembly code goes here **********
+; ********** program logic begins **********
 
-; example during SI session
+; secure array into a stable register
+mov r15, rdi
+
+; start a counter
+mov r14, 0
+
+; create space on stack for input number
+sub rsp, 64
+
+; prompt user for numbers to input into array
+getNumber:
+mov rax, 0
+mov rdi, format_int
+mov rsi, rsp
+call scanf
+
+; stop prompt if cntl-D
+cdqe
+cmp rax, -1
+je continue
+
+; input number into array
+mov r10, [rsp]
+mov [r15 + 8 * r14], r10
+inc r14
+jmp getNumber
+
+continue:
+add rsp, 64
+mov rax, r14
 
 
 ;===== Restore original values to integer registers ===================================================================
