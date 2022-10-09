@@ -1,8 +1,12 @@
 #include <stdio.h>
 
 extern "C"
-int display_array(int argc, char *argv[])
+int display_array(int * arr)
 {
-    printf("[ Array!  hurray!  it's displayed ]\n");
+    printf("\n");
+    for (int * i = arr; *i; ++i) {
+      printf("%d ", *i);
+    }
+    // printf("[ Array!  hurray!  it's displayed ]\n");
     return 0;
 }

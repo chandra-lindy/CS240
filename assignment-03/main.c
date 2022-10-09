@@ -10,18 +10,13 @@ int main(int argc, char *argv[])
     printf("\n\n\nWelcome to Sum Array!\n"
            "programmed by Chandra Lindy\n\n");
     int answer = sum();
-    // int result = input_array();
     char * name = manager();
 
     printf("Answer that was return from sum(): %d\n", answer);
-    // printf("Return value from input_array(): %d\n", result);
     printf("Return value from manager: %s\n", name);
 
-    printf("display_array works!!");
-    display_array();
-
     printf("\n\nThank you for running this program!  Wish you the best for rest of the day...\n");
-    printf("main.c will return 0 to the operating system.  Buh bye!");
+    printf("main.c will return 0 to the operating system.  Buh bye!\n");
 
     return 0;
 }

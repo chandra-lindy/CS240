@@ -55,7 +55,7 @@ je continue
 
 ; input number into array
 mov r10, [rsp]
-mov [r15 + 8 * r14], r10
+mov [r15 + 4 * r14], r10
 inc r14
 jmp getNumber
 

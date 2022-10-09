@@ -4,6 +4,7 @@ extern printf
 extern scanf
 extern sum
 extern input_array
+extern display_array
 
 ;; standard library
 extern strlen
@@ -73,12 +74,16 @@ mov byte [name + rax], 0
 
 
 
-; more logic goes here
+; prompt user for integers
 mov rax, 0
 mov rdi, int_arr
 call input_array
 
 
+; display integers
+mov rax, 0
+mov rdi, int_arr
+call display_array
 
 
 ; return name to driver
