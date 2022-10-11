@@ -3,10 +3,10 @@
 extern "C"
 int display_array(int * arr)
 {
-    printf("\n");
-    for (int * i = arr; *i; ++i) {
+    printf("\nThese numbers were received and stored in an array:\n");
+    for (int * i = arr; *i; ++i)
       printf("%d ", *i);
-    }
-    // printf("[ Array!  hurray!  it's displayed ]\n");
+
+    printf("\n\n");
     return 0;
 }

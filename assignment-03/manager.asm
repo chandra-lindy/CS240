@@ -17,7 +17,7 @@ INPUT_LEN equ 256
 segment .data
 ; message string declaration
 message_prompt_name db "Please enter your name: ", 10, 10, 0
-message_prompt_array db "Please enter your array of integers separated by white space (cntl-d when finished): ", 10, 10, 0
+message_prompt_array db 10, "Please enter your array of integers separated by white space (cntl-d when finished): ", 10, 10, 0
 message_display_array db "The following numbers were received and stored away in an array", 10, 10, 0
 message_display_sum db "The sum of the %d numbers in this array is %d", 10, 10, 0
 message_return db "This program will return execution to the main function", 10, 10, 0
@@ -74,10 +74,20 @@ mov byte [name + rax], 0
 
 
 
+
 ; prompt user for integers
+;; display prompt message for array
+mov rax, 0
+mov rdi, message_prompt_array
+call printf
+
+;; get input from user
 mov rax, 0
 mov rdi, int_arr
 call input_array
+
+
+
 
 ; display integers
 mov rax, 0

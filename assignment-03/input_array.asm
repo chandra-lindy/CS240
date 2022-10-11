@@ -1,9 +1,11 @@
 extern scanf
+extern is_integer
+extern atoi
 
 
 segment .data
 ; format string declaration
-format_int db "%d", 0
+format_int db "%s", 0
 
 segment .bss
 
@@ -53,8 +55,21 @@ cdqe
 cmp rax, -1
 je continue
 
+; validate input
+mov rax, 0
+mov rdi, rsp
+call is_integer
+cdqe
+cmp rax, -1
+je getNumber
+
+; convert string to integer
+mov rax, 0
+mov rdi, rsp
+call atoi
+
 ; input number into array
-mov r10, [rsp]
+mov r10, rax
 mov [r15 + 4 * r14], r10
 inc r14
 jmp getNumber
