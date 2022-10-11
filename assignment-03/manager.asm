@@ -25,7 +25,7 @@ message_return db "This program will return execution to the main function", 10,
 segment .bss
 ; declare variable to store name
 name resb INPUT_LEN
-int_arr resq 200
+int_arr resd 200
 
 segment .text
 
@@ -79,11 +79,11 @@ mov rax, 0
 mov rdi, int_arr
 call input_array
 
-
 ; display integers
 mov rax, 0
 mov rdi, int_arr
 call display_array
+
 
 
 ; return name to driver
