@@ -31,6 +31,29 @@ pushf
 
 ; ********** program logic begins **********
 
+; put array in a stable register
+mov r15, rdi
+
+; start a counter
+mov r14, 0
+
+; start a total count
+mov r13, 0
+
+sum_array:
+; check for end of array
+mov rax, [r15 + 4 * r14]
+cdqe
+cmp rax, 0
+je end
+
+; add integer to total count
+add r13, [r15 + 4 * r14]
+inc r14
+jmp sum_array
+
+end:
+mov rax, r13
 
 
 ;===== Restore original values to integer registers ===================================================================

@@ -25,7 +25,13 @@ message_return db "This program will return execution to the main function", 10,
 segment .bss
 ; declare variable to store name
 name resb INPUT_LEN
+; declare int array
 int_arr resd 200
+
+; declare return result for input_array
+; first value is n
+; second value boolean flag for invalid input; 0 false; 1 true
+arr_info resd 2
 
 segment .text
 
@@ -87,6 +93,20 @@ mov rdi, int_arr
 call input_array
 
 
+
+; sum array
+mov rax, 0
+mov rdi, int_arr
+call sum
+
+; save result
+mov r15, rax
+
+; display sum
+mov rax, 0
+mov rdi, message_display_sum
+mov rsi, r15
+call printf
 
 
 ; display integers
