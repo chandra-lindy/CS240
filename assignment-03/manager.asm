@@ -20,7 +20,13 @@ message_prompt_name db "Please enter your name: ", 10, 10, 0
 message_prompt_array db 10, "Please enter your array of integers separated by white space (cntl-d when finished): ", 10, 10, 0
 message_display_array db "The following numbers were received and stored away in an array", 10, 10, 0
 message_display_sum db "The sum of the %d numbers in this array is %d", 10, 10, 0
+message_display_omit db 10, "One or more numbers were invalid and were omitted from the array", 10, 10, 0
 message_return db "This program will return execution to the main function", 10, 10, 0
+
+; declare return result for input_array
+; first value is n = 0 - to be used as counter in inptu_array
+; second value boolean flag for invalid input; 0 false; 1 true
+arr_info dd 0, 0
 
 segment .bss
 ; declare variable to store name
@@ -28,10 +34,6 @@ name resb INPUT_LEN
 ; declare int array
 int_arr resd 200
 
-; declare return result for input_array
-; first value is n
-; second value boolean flag for invalid input; 0 false; 1 true
-arr_info resd 2
 
 segment .text
 
@@ -90,7 +92,33 @@ call printf
 ;; get input from user
 mov rax, 0
 mov rdi, int_arr
+mov rsi, arr_info
 call input_array
+
+
+
+
+; display value omittion if any
+mov rax, [arr_info + 4]
+cdqe
+cmp rax, 0
+je no_invalid
+
+; display omit message
+mov rax, 0
+mov rdi, message_display_omit
+call printf
+
+
+
+
+no_invalid:
+; display integers
+mov rax, 0
+mov rdi, int_arr
+call display_array
+
+
 
 
 
@@ -98,22 +126,19 @@ call input_array
 mov rax, 0
 mov rdi, int_arr
 call sum
-
-; save result
 mov r15, rax
+
+
+
+
+
 
 ; display sum
 mov rax, 0
 mov rdi, message_display_sum
-mov rsi, r15
+mov rsi, [arr_info]
+mov rdx, r15
 call printf
-
-
-; display integers
-mov rax, 0
-mov rdi, int_arr
-call display_array
-
 
 
 ; return name to driver

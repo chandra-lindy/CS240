@@ -36,12 +36,18 @@ pushf
 
 ; secure array into a stable register
 mov r15, rdi
+mov r14, rsi
 
 ; start a counter
-mov r14, 0
+mov r13, 0
 
 ; create space on stack for input number
 sub rsp, 64
+jmp getNumber
+
+; set flag to true if invalid input found
+invalid:
+inc dword [r14 + 4]
 
 ; prompt user for numbers to input into array
 getNumber:
@@ -61,7 +67,8 @@ mov rdi, rsp
 call is_integer
 cdqe
 cmp rax, -1
-je getNumber
+je invalid
+
 
 ; convert string to integer
 mov rax, 0
@@ -70,13 +77,13 @@ call atoi
 
 ; input number into array
 mov r10, rax
-mov [r15 + 4 * r14], r10
-inc r14
+mov [r15 + 4 * r13], r10
+inc r13
 jmp getNumber
 
 continue:
 add rsp, 64
-mov rax, r14
+mov [r14], r13d
 
 
 ;===== Restore original values to integer registers ===================================================================
