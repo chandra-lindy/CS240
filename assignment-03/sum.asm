@@ -34,22 +34,28 @@ pushf
 ; put array in a stable register
 mov r15, rdi
 
-; start a counter
-mov r14, 0
+; put n in a stable register
+mov r14, rsi
 
 ; start a total count
 mov r13, 0
 
+; start loop counter
+mov r12, 0
+
 sum_array:
 ; check for end of array
-mov rax, [r15 + 8 * r14]
-cdqe
-cmp rax, 0
+cmp r12, r14
 je end
+; check for end of array
+;mov rax, [r15 + 8 * r14]
+;cdqe
+;cmp rax, 0
+;je end
 
 ; add integer to total count
-add r13, [r15 + 8 * r14]
-inc r14
+add r13, [r15 + 8 * r12]
+inc r12
 jmp sum_array
 
 end:

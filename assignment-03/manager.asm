@@ -112,6 +112,7 @@ call display_array
 ; sum array
 mov rax, 0
 mov rdi, int_arr
+mov rsi, [arr_info]
 call sum
 mov r15, rax
 
