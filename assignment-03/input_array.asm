@@ -77,7 +77,7 @@ call atoi
 
 ; input number into array
 mov r10, rax
-mov [r15 + 4 * r13], r10
+mov [r15 + 8 * r13], r10
 inc r13
 jmp getNumber
 

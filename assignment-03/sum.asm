@@ -42,13 +42,13 @@ mov r13, 0
 
 sum_array:
 ; check for end of array
-mov rax, [r15 + 4 * r14]
+mov rax, [r15 + 8 * r14]
 cdqe
 cmp rax, 0
 je end
 
 ; add integer to total count
-add r13, [r15 + 4 * r14]
+add r13, [r15 + 8 * r14]
 inc r14
 jmp sum_array
 

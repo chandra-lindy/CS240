@@ -32,7 +32,7 @@ segment .bss
 ; declare variable to store name
 name resb INPUT_LEN
 ; declare int array
-int_arr resd 200
+int_arr resq 200
 
 
 segment .text
