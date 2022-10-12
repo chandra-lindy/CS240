@@ -26,7 +26,7 @@ message_return db "This program will return execution to the main function", 10,
 ; declare return result for input_array
 ; first value is n = 0 - to be used as counter in inptu_array
 ; second value boolean flag for invalid input; 0 false; 1 true
-arr_info dd 0, 0
+arr_info dq 0, 0
 
 segment .bss
 ; declare variable to store name
@@ -99,7 +99,7 @@ call input_array
 
 
 ; display value omittion if any
-mov rax, [arr_info + 4]
+mov rax, [arr_info + 8]
 cdqe
 cmp rax, 0
 je no_invalid

@@ -47,7 +47,7 @@ jmp getNumber
 
 ; set flag to true if invalid input found
 invalid:
-inc dword [r14 + 4]
+inc qword [r14 + 8]
 
 ; prompt user for numbers to input into array
 getNumber:
@@ -83,7 +83,7 @@ jmp getNumber
 
 continue:
 add rsp, 64
-mov [r14], r13d
+mov [r14], r13
 
 
 ;===== Restore original values to integer registers ===================================================================
