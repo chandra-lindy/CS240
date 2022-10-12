@@ -80,9 +80,6 @@ call strlen
 sub rax, 1
 mov byte [name + rax], 0
 
-
-
-
 ; prompt user for integers
 ;; display prompt message for array
 mov rax, 0
@@ -95,9 +92,6 @@ mov rdi, int_arr
 mov rsi, arr_info
 call input_array
 
-
-
-
 ; display value omittion if any
 mov rax, [arr_info + 8]
 cdqe
@@ -109,18 +103,11 @@ mov rax, 0
 mov rdi, message_display_omit
 call printf
 
-
-
-
 no_invalid:
 ; display integers
 mov rax, 0
 mov rdi, int_arr
 call display_array
-
-
-
-
 
 ; sum array
 mov rax, 0
@@ -128,18 +115,12 @@ mov rdi, int_arr
 call sum
 mov r15, rax
 
-
-
-
-
-
 ; display sum
 mov rax, 0
 mov rdi, message_display_sum
 mov rsi, [arr_info]
 mov rdx, r15
 call printf
-
 
 ; return name to driver
 mov rax, name

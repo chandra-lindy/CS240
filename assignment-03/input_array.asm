@@ -69,7 +69,6 @@ cdqe
 cmp rax, -1
 je invalid
 
-
 ; convert string to integer
 mov rax, 0
 mov rdi, rsp
@@ -84,7 +83,6 @@ jmp getNumber
 continue:
 add rsp, 64
 mov [r14], r13
-
 
 ;===== Restore original values to integer registers ===================================================================
 popf
